@@ -1,0 +1,20 @@
+{
+  "professionalName": "Tayler Hickman",
+  "base64Image": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==",
+  "nameLink": {
+    "firstName": "Tayler",
+    "url": "https://example.com"
+  },
+  "primaryDescription": "I'm an up and coming developer in web technologies",
+  "workDescription1": "Software Engineer building scalable web apps",
+  "workDescription2": "Freelance developer creating interfaces that are user-friendly",
+  "linkTitleText": "Connect with Me",
+  "linkedInLink": {
+    "text": "LinkedIn",
+    "link": "https://www.linkedin.com/in/tayler-sue-hickman-441817291/"
+  },
+  "githubLink": {
+    "text": "GitHub",
+    "link": "https://github.com/tsue-hickman"
+  }
+}
