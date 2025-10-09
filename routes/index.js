@@ -1,11 +1,15 @@
-const routes = require('express').Router();
-const lesson1Controller = require('../controllers/lesson1');
+const express = require('express');
+const router = express.Router();
 
-// lesson 1 routes
-routes.get('/', lesson1Controller.emilyRoute);
-routes.get('/hannah', lesson1Controller.hannahRoute); 
+// swagger docs route
+router.use('/api-docs', require('./swagger'));
 
-// New contacts routes for week 2
-routes.use('/contacts', require('./contacts'));
+// temple routes
+router.use('/temples', require('./temples'));
 
-module.exports = routes;
+// home route - just shows a message
+router.get('/', (req, res) => {
+  res.send('Welcome to the CSE 341 Temples API');
+});
+
+module.exports = router;

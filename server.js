@@ -1,32 +1,31 @@
 const express = require('express');
-const { connectDB } = require('./db');
-const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./swagger.json');
+const mongodb = require('./db/connect');
+const bodyParser = require('body-parser');
 
 const app = express();
-const port = 8080;
+const port = process.env.PORT || 3000;
 
-// Middleware
-app.use(express.json());
+// middleware to parse JSON requests
+app.use(bodyParser.json());
 
-// Swagger UI setup
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, {
-  swaggerOptions: { validatorUrl: null },
-  customCss: '.swagger-ui .topbar { display: none }',
-  customSiteTitle: 'Temples API Docs'
-}));
-
-// Connect to MongoDB
-connectDB().then(() => {
-  console.log('Database connection established');
-}).catch((error) => {
-  console.error('Failed to connect to database:', error);
+// middleware for handling CORS - allows requests from other domains
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
 });
 
-// Routes
-app.use('/', require('./routes')); // Existing contacts and lesson routes
-app.use('/temples', require('./routes/temples')); // Temple routes
+// use routes
+app.use('/', require('./routes'));
 
-app.listen(process.env.PORT || port, () => {
-  console.log('Web Server is listening at port ' + (process.env.PORT || port));
+// connect to database and start server
+mongodb.initDb((err) => {
+  if (err) {
+    console.log('Error connecting to database:', err);
+  } else {
+    app.listen(port, () => {
+      console.log(`Database is connected and server is running on port ${port}`);
+    });
+  }
 });
