@@ -1,0 +1,61 @@
+### Get all temples (LOCAL)
+GET http://localhost:3000/temples
+
+### Get all temples (RENDER)
+GET https://cse341-fall2025.onrender.com/temples
+
+### Get single temple by ID (LOCAL)
+GET http://localhost:3000/temples/PASTE_ID_HERE
+
+### Get single temple by ID (RENDER)
+GET https://cse341-fall2025.onrender.com/temples/PASTE_ID_HERE
+
+### Create a new temple (LOCAL)
+POST http://localhost:3000/temples
+Content-Type: application/json
+
+{
+  "temple_id": "T001",
+  "name": "Salt Lake Temple",
+  "description": "Historic temple located in downtown Salt Lake City",
+  "location": "Salt Lake City, Utah"
+}
+
+### Create a new temple (RENDER)
+POST https://cse341-fall2025.onrender.com/temples
+Content-Type: application/json
+
+{
+  "temple_id": "T002",
+  "name": "Provo City Center Temple",
+  "description": "Beautiful temple in Provo",
+  "location": "Provo, Utah"
+}
+
+### Update a temple (LOCAL)
+PUT http://localhost:3000/temples/PASTE_ID_HERE
+Content-Type: application/json
+
+{
+  "temple_id": "T001",
+  "name": "Salt Lake Temple Updated",
+  "description": "Updated description",
+  "location": "Salt Lake City, Utah"
+}
+
+### Update a temple (RENDER)
+PUT https://cse341-fall2025.onrender.com/temples/PASTE_ID_HERE
+Content-Type: application/json
+
+{
+  "temple_id": "T002",
+  "name": "Provo City Center Temple Updated",
+  "description": "Updated description",
+  "location": "Provo, Utah"
+}
+
+### Delete a temple (LOCAL)
+DELETE http://localhost:3000/temples/PASTE_ID_HERE
+
+### Delete a temple (RENDER)
+DELETE https://cse341-fall2025.onrender.com/temples/PASTE_ID_HERE

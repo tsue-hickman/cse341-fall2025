@@ -1,0 +1,153 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Temples API",
+        "description": "API for managing temple information",
+        "version": "1.0.0"
+    },
+    "host": "cse341-fall2025.onrender.com",
+    "basePath": "/",
+    "schemes": [
+        "https"
+    ],
+    "paths": {
+        "/temples": {
+            "get": {
+                "description": "Get all temples",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "post": {
+                "description": "Create a new temple",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "temple_id": {
+                                    "type": "string",
+                                    "example": "T001"
+                                },
+                                "name": {
+                                    "type": "string",
+                                    "example": "Salt Lake Temple"
+                                },
+                                "description": {
+                                    "type": "string",
+                                    "example": "Historic temple in downtown Salt Lake City"
+                                },
+                                "location": {
+                                    "type": "string",
+                                    "example": "Salt Lake City, Utah"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/temples/{id}": {
+            "get": {
+                "description": "Get a single temple by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            },
+            "put": {
+                "description": "Update a temple",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "temple_id": {
+                                    "type": "string",
+                                    "example": "T001"
+                                },
+                                "name": {
+                                    "type": "string",
+                                    "example": "Salt Lake Temple"
+                                },
+                                "description": {
+                                    "type": "string",
+                                    "example": "Historic temple in downtown Salt Lake City"
+                                },
+                                "location": {
+                                    "type": "string",
+                                    "example": "Salt Lake City, Utah"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a temple",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        }
+    }
+}
