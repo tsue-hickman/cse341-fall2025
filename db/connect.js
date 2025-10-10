@@ -13,7 +13,10 @@ const initDb = (callback) => {
   }
   
   // connect to MongoDB using connection string from .env file
-  MongoClient.connect(process.env.MONGODB_URI)
+  MongoClient.connect(process.env.MONGODB_URI, {
+    tls: true,
+    tlsAllowInvalidCertificates: true
+  })
     .then((client) => {
       database = client.db();
       callback(null, database);
