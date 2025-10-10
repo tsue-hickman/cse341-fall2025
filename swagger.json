@@ -5,10 +5,10 @@
         "description": "API for managing temple information",
         "version": "1.0.0"
     },
-    "host": "localhost:8080",
+    "host": "cse341-fall2025.onrender.com",
     "basePath": "/",
     "schemes": [
-        "http"
+        "https"
     ],
     "paths": {
         "/temples": {
