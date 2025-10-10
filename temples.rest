@@ -1,17 +1,17 @@
 ### Get all temples (LOCAL)
-GET http://localhost:3000/temples
+GET http://localhost:8080/temples
 
 ### Get all temples (RENDER)
 GET https://cse341-fall2025.onrender.com/temples
 
 ### Get single temple by ID (LOCAL)
-GET http://localhost:3000/temples/PASTE_ID_HERE
+GET http://localhost:8080/temples/PASTE_ID_HERE
 
 ### Get single temple by ID (RENDER)
 GET https://cse341-fall2025.onrender.com/temples/PASTE_ID_HERE
 
 ### Create a new temple (LOCAL)
-POST http://localhost:3000/temples
+POST http://localhost:8080/temples
 Content-Type: application/json
 
 {
