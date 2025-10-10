@@ -5,10 +5,10 @@ GET http://localhost:8080/temples
 GET https://cse341-fall2025.onrender.com/temples
 
 ### Get single temple by ID (LOCAL)
-GET http://localhost:8080/temples/PASTE_ID_HERE
+GET http://localhost:8080/temples/68e86d8cafccdb842507a167
 
 ### Get single temple by ID (RENDER)
-GET https://cse341-fall2025.onrender.com/temples/PASTE_ID_HERE
+GET https://cse341-fall2025.onrender.com/temples/68e86d8cafccdb842507a167
 
 ### Create a new temple (LOCAL)
 POST http://localhost:8080/temples
@@ -33,7 +33,7 @@ Content-Type: application/json
 }
 
 ### Update a temple (LOCAL)
-PUT http://localhost:3000/temples/PASTE_ID_HERE
+PUT http://localhost:3000/temples/68e86d8cafccdb842507a167
 Content-Type: application/json
 
 {
@@ -44,7 +44,7 @@ Content-Type: application/json
 }
 
 ### Update a temple (RENDER)
-PUT https://cse341-fall2025.onrender.com/temples/PASTE_ID_HERE
+PUT https://cse341-fall2025.onrender.com/temples/68e86d8cafccdb842507a167
 Content-Type: application/json
 
 {
@@ -55,7 +55,7 @@ Content-Type: application/json
 }
 
 ### Delete a temple (LOCAL)
-DELETE http://localhost:3000/temples/PASTE_ID_HERE
+DELETE http://localhost:3000/temples/68e86eabafccdb842507a169
 
 ### Delete a temple (RENDER)
-DELETE https://cse341-fall2025.onrender.com/temples/PASTE_ID_HERE
+DELETE https://cse341-fall2025.onrender.com/temples/68e86eabafccdb842507a169
