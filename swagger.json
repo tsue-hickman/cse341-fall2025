@@ -1,8 +1,8 @@
 {
     "swagger": "2.0",
     "info": {
-        "title": "Temples API",
-        "description": "API for managing temple information",
+        "title": "Movie Tracker API",
+        "description": "API for managing movie information",
         "version": "1.0.0"
     },
     "host": "cse341-fall2025.onrender.com",
@@ -11,9 +11,9 @@
         "https"
     ],
     "paths": {
-        "/temples": {
+        "/movies": {
             "get": {
-                "description": "Get all temples",
+                "description": "Get all movies",
                 "produces": [
                     "application/json"
                 ],
@@ -24,7 +24,7 @@
                 }
             },
             "post": {
-                "description": "Create a new temple",
+                "description": "Create a new movie",
                 "parameters": [
                     {
                         "name": "body",
@@ -32,23 +32,32 @@
                         "schema": {
                             "type": "object",
                             "properties": {
-                                "temple_id": {
+                                "title": {
                                     "type": "string",
-                                    "example": "T001"
+                                    "example": "Inception"
                                 },
-                                "name": {
+                                "genre": {
                                     "type": "string",
-                                    "example": "Salt Lake Temple"
+                                    "example": "Sci-Fi"
                                 },
-                                "description": {
-                                    "type": "string",
-                                    "example": "Historic temple in downtown Salt Lake City"
+                                "year": {
+                                    "type": "number",
+                                    "example": 2010
                                 },
-                                "location": {
+                                "rating": {
+                                    "type": "number",
+                                    "example": 8.8
+                                },
+                                "director": {
                                     "type": "string",
-                                    "example": "Salt Lake City, Utah"
+                                    "example": "Christopher Nolan"
                                 }
-                            }
+                            },
+                            "required": [
+                                "title",
+                                "genre",
+                                "year"
+                            ]
                         }
                     }
                 ],
@@ -62,9 +71,9 @@
                 }
             }
         },
-        "/temples/{id}": {
+        "/movies/{id}": {
             "get": {
-                "description": "Get a single temple by ID",
+                "description": "Get a single movie by ID",
                 "produces": [
                     "application/json"
                 ],
@@ -86,7 +95,7 @@
                 }
             },
             "put": {
-                "description": "Update a temple",
+                "description": "Update a movie",
                 "parameters": [
                     {
                         "name": "id",
@@ -100,29 +109,33 @@
                         "schema": {
                             "type": "object",
                             "properties": {
-                                "temple_id": {
+                                "title": {
                                     "type": "string",
-                                    "example": "T001"
+                                    "example": "Inception"
                                 },
-                                "name": {
+                                "genre": {
                                     "type": "string",
-                                    "example": "Salt Lake Temple"
+                                    "example": "Sci-Fi"
                                 },
-                                "description": {
-                                    "type": "string",
-                                    "example": "Historic temple in downtown Salt Lake City"
+                                "year": {
+                                    "type": "number",
+                                    "example": 2010
                                 },
-                                "location": {
+                                "rating": {
+                                    "type": "number",
+                                    "example": 8.8
+                                },
+                                "director": {
                                     "type": "string",
-                                    "example": "Salt Lake City, Utah"
+                                    "example": "Christopher Nolan"
                                 }
                             }
                         }
                     }
                 ],
                 "responses": {
-                    "204": {
-                        "description": "No Content"
+                    "200": {
+                        "description": "OK"
                     },
                     "404": {
                         "description": "Not Found"
@@ -130,7 +143,7 @@
                 }
             },
             "delete": {
-                "description": "Delete a temple",
+                "description": "Delete a movie",
                 "parameters": [
                     {
                         "name": "id",
@@ -140,8 +153,8 @@
                     }
                 ],
                 "responses": {
-                    "204": {
-                        "description": "No Content"
+                    "200": {
+                        "description": "OK"
                     },
                     "404": {
                         "description": "Not Found"
