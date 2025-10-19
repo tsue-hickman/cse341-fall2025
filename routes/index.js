@@ -4,12 +4,12 @@ const router = express.Router();
 // swagger docs route
 router.use('/api-docs', require('./swagger'));
 
-// temple routes
-router.use('/temples', require('./temples'));
+// movie routes (replacing temple routes)
+router.use('/movies', require('./movies'));
 
 // home route - just shows a message
 router.get('/', (req, res) => {
-  res.send('Welcome to the CSE 341 Temples API');
+  res.send('Welcome to the Movie Tracker API');
 });
 
 module.exports = router;
