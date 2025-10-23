@@ -2,8 +2,8 @@
     "swagger": "2.0",
     "info": {
         "title": "Movie Tracker API",
-        "description": "API for managing movie information",
-        "version": "1.0.0"
+        "description": "API for managing movie information with validation and error handling",
+        "version": "2.0.0"
     },
     "host": "cse341-fall2025.onrender.com",
     "basePath": "/",
@@ -19,7 +19,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "Successfully retrieved all movies"
+                    },
+                    "500": {
+                        "description": "Internal server error"
                     }
                 }
             },
@@ -29,28 +32,37 @@
                     {
                         "name": "body",
                         "in": "body",
+                        "required": true,
                         "schema": {
                             "type": "object",
                             "properties": {
                                 "title": {
                                     "type": "string",
-                                    "example": "Inception"
+                                    "example": "Inception",
+                                    "minLength": 1,
+                                    "maxLength": 200
                                 },
                                 "genre": {
                                     "type": "string",
-                                    "example": "Sci-Fi"
+                                    "example": "Sci-Fi",
+                                    "minLength": 2,
+                                    "maxLength": 50
                                 },
                                 "year": {
-                                    "type": "number",
-                                    "example": 2010
+                                    "type": "integer",
+                                    "example": 2010,
+                                    "minimum": 1888
                                 },
                                 "rating": {
                                     "type": "number",
-                                    "example": 8.8
+                                    "example": 8.8,
+                                    "minimum": 0,
+                                    "maximum": 10
                                 },
                                 "director": {
                                     "type": "string",
-                                    "example": "Christopher Nolan"
+                                    "example": "Christopher Nolan",
+                                    "maxLength": 100
                                 }
                             },
                             "required": [
@@ -63,10 +75,13 @@
                 ],
                 "responses": {
                     "201": {
-                        "description": "Created"
+                        "description": "Movie created successfully"
                     },
                     "400": {
-                        "description": "Bad Request"
+                        "description": "Validation error - invalid input data"
+                    },
+                    "500": {
+                        "description": "Internal server error"
                     }
                 }
             }
@@ -82,15 +97,22 @@
                         "name": "id",
                         "in": "path",
                         "required": true,
-                        "type": "string"
+                        "type": "string",
+                        "description": "MongoDB ObjectId of the movie"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "Successfully retrieved movie"
+                    },
+                    "400": {
+                        "description": "Invalid ID format"
                     },
                     "404": {
-                        "description": "Not Found"
+                        "description": "Movie not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
                     }
                 }
             },
@@ -101,7 +123,8 @@
                         "name": "id",
                         "in": "path",
                         "required": true,
-                        "type": "string"
+                        "type": "string",
+                        "description": "MongoDB ObjectId of the movie"
                     },
                     {
                         "name": "body",
@@ -111,23 +134,31 @@
                             "properties": {
                                 "title": {
                                     "type": "string",
-                                    "example": "Inception"
+                                    "example": "Inception",
+                                    "minLength": 1,
+                                    "maxLength": 200
                                 },
                                 "genre": {
                                     "type": "string",
-                                    "example": "Sci-Fi"
+                                    "example": "Sci-Fi",
+                                    "minLength": 2,
+                                    "maxLength": 50
                                 },
                                 "year": {
-                                    "type": "number",
-                                    "example": 2010
+                                    "type": "integer",
+                                    "example": 2010,
+                                    "minimum": 1888
                                 },
                                 "rating": {
                                     "type": "number",
-                                    "example": 8.8
+                                    "example": 8.8,
+                                    "minimum": 0,
+                                    "maximum": 10
                                 },
                                 "director": {
                                     "type": "string",
-                                    "example": "Christopher Nolan"
+                                    "example": "Christopher Nolan",
+                                    "maxLength": 100
                                 }
                             }
                         }
@@ -135,10 +166,16 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "Movie updated successfully"
+                    },
+                    "400": {
+                        "description": "Validation error or no fields to update"
                     },
                     "404": {
-                        "description": "Not Found"
+                        "description": "Movie not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
                     }
                 }
             },
@@ -149,15 +186,22 @@
                         "name": "id",
                         "in": "path",
                         "required": true,
-                        "type": "string"
+                        "type": "string",
+                        "description": "MongoDB ObjectId of the movie"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "Movie deleted successfully"
+                    },
+                    "400": {
+                        "description": "Invalid ID format"
                     },
                     "404": {
-                        "description": "Not Found"
+                        "description": "Movie not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
                     }
                 }
             }
