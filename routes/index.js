@@ -1,15 +1,25 @@
 const express = require('express');
 const router = express.Router();
 
-// swagger docs route
+// Auth routes
+router.use('/auth', require('./auth'));
+
+// Swagger docs
 router.use('/api-docs', require('./swagger'));
 
-// movie routes (replacing temple routes)
+// Movies routes (public)
 router.use('/movies', require('./movies'));
 
-// home route - just shows a message
+// Home route
 router.get('/', (req, res) => {
-  res.send('Welcome to the Movie Tracker API');
+  res.json({ 
+    message: 'Welcome to CSE 341 Movies API',
+    endpoints: {
+      auth: '/auth/github',
+      docs: '/api-docs',
+      movies: '/movies'
+    }
+  });
 });
 
 module.exports = router;

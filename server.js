@@ -1,14 +1,23 @@
 const express = require('express');
 const mongodb = require('./db/connect');
 const bodyParser = require('body-parser');
+const session = require('express-session');
+const passport = require('./config/passport');
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8080;
 
-// middleware to parse JSON requests
 app.use(bodyParser.json());
 
-// middleware for handling CORS - allows requests from other domains
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
@@ -16,16 +25,17 @@ app.use((req, res, next) => {
   next();
 });
 
-// use routes
 app.use('/', require('./routes'));
 
-// connect to database and start server
 mongodb.initDb((err) => {
   if (err) {
     console.log('Error connecting to database:', err);
   } else {
     app.listen(port, () => {
-      console.log(`Database is connected and server is running on port ${port}`);
+      console.log(`Database connected and server running on port ${port}`);
     });
   }
 });
+
+// Export app for testing
+module.exports = app;

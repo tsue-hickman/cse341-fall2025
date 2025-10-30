@@ -2,6 +2,11 @@
 const express = require('express');
 const router = express.Router();
 const moviesController = require('../controllers/movies');
+// Reviews routes (protected)
+router.use('/reviews', require('./reviews'));
+
+// Watchlists routes (protected)
+router.use('/watchlists', require('./watchlists'));
 
 // GET all movies
 router.get('/', moviesController.getAllMovies);
