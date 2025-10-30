@@ -19,15 +19,30 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successfully retrieved all movies"
+                        "description": "Successfully retrieved all movies",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Movie"
+                            }
+                        }
                     },
                     "500": {
-                        "description": "Internal server error"
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
                     }
                 }
             },
             "post": {
                 "description": "Create a new movie",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
                 "parameters": [
                     {
                         "name": "body",
@@ -75,13 +90,22 @@
                 ],
                 "responses": {
                     "201": {
-                        "description": "Movie created successfully"
+                        "description": "Movie created successfully",
+                        "schema": {
+                            "$ref": "#/definitions/Movie"
+                        }
                     },
                     "400": {
-                        "description": "Validation error - invalid input data"
+                        "description": "Validation error - invalid input data",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
                     },
                     "500": {
-                        "description": "Internal server error"
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
                     }
                 }
             }
@@ -103,21 +127,39 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successfully retrieved movie"
+                        "description": "Successfully retrieved movie",
+                        "schema": {
+                            "$ref": "#/definitions/Movie"
+                        }
                     },
                     "400": {
-                        "description": "Invalid ID format"
+                        "description": "Invalid ID format",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
                     },
                     "404": {
-                        "description": "Movie not found"
+                        "description": "Movie not found",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
                     },
                     "500": {
-                        "description": "Internal server error"
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
                     }
                 }
             },
             "put": {
                 "description": "Update a movie",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
                 "parameters": [
                     {
                         "name": "id",
@@ -129,6 +171,7 @@
                     {
                         "name": "body",
                         "in": "body",
+                        "required": true,
                         "schema": {
                             "type": "object",
                             "properties": {
@@ -160,22 +203,35 @@
                                     "example": "Christopher Nolan",
                                     "maxLength": 100
                                 }
-                            }
+                            },
+                            "required": []
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Movie updated successfully"
+                        "description": "Movie updated successfully",
+                        "schema": {
+                            "$ref": "#/definitions/Movie"
+                        }
                     },
                     "400": {
-                        "description": "Validation error or no fields to update"
+                        "description": "Validation error or no fields to update",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
                     },
                     "404": {
-                        "description": "Movie not found"
+                        "description": "Movie not found",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
                     },
                     "500": {
-                        "description": "Internal server error"
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
                     }
                 }
             },
@@ -192,19 +248,329 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Movie deleted successfully"
+                        "description": "Movie deleted successfully",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "example": "Movie deleted successfully"
+                                }
+                            }
+                        }
                     },
                     "400": {
-                        "description": "Invalid ID format"
+                        "description": "Invalid ID format",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
                     },
                     "404": {
-                        "description": "Movie not found"
+                        "description": "Movie not found",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
                     },
                     "500": {
-                        "description": "Internal server error"
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
                     }
                 }
             }
+        },
+        "/auth/github": {
+            "get": {
+                "description": "Initiate GitHub OAuth login",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "302": {
+                        "description": "Redirect to GitHub for authentication",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "redirectUrl": {
+                                    "type": "string",
+                                    "example": "https://github.com/login/oauth/authorize"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/success": {
+            "get": {
+                "description": "OAuth authentication success",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User successfully authenticated",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "example": "User successfully authenticated"
+                                },
+                                "user": {
+                                    "$ref": "#/definitions/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/reviews": {
+            "post": {
+                "description": "Create a movie review (requires authentication)",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "movieId": {
+                                    "type": "string",
+                                    "example": "507f1f77bcf86cd799439011",
+                                    "description": "MongoDB ObjectId of the movie"
+                                },
+                                "rating": {
+                                    "type": "number",
+                                    "example": 8.5,
+                                    "minimum": 0,
+                                    "maximum": 10
+                                },
+                                "comment": {
+                                    "type": "string",
+                                    "example": "Great movie!",
+                                    "maxLength": 500
+                                }
+                            },
+                            "required": [
+                                "movieId",
+                                "rating",
+                                "comment"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Review created",
+                        "schema": {
+                            "$ref": "#/definitions/Review"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/watchlists/my": {
+            "get": {
+                "description": "Get current user's watchlist (requires authentication)",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Watchlist retrieved",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Movie"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/watchlists": {
+            "post": {
+                "description": "Add movie to watchlist (requires authentication)",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "movieId": {
+                                    "type": "string",
+                                    "example": "507f1f77bcf86cd799439011",
+                                    "description": "MongoDB ObjectId of the movie"
+                                }
+                            },
+                            "required": [
+                                "movieId"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Added to watchlist",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "example": "Movie added to watchlist"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Movie": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "MongoDB ObjectId of the movie"
+                },
+                "title": {
+                    "type": "string",
+                    "example": "Inception"
+                },
+                "genre": {
+                    "type": "string",
+                    "example": "Sci-Fi"
+                },
+                "year": {
+                    "type": "integer",
+                    "example": 2010
+                },
+                "rating": {
+                    "type": "number",
+                    "example": 8.8
+                },
+                "director": {
+                    "type": "string",
+                    "example": "Christopher Nolan"
+                }
+            },
+            "required": [
+                "id",
+                "title",
+                "genre",
+                "year"
+            ]
+        },
+        "Review": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "MongoDB ObjectId of the review"
+                },
+                "movieId": {
+                    "type": "string",
+                    "example": "507f1f77bcf86cd799439011"
+                },
+                "rating": {
+                    "type": "number",
+                    "example": 8.5
+                },
+                "comment": {
+                    "type": "string",
+                    "example": "Great movie!"
+                }
+            },
+            "required": [
+                "id",
+                "movieId",
+                "rating",
+                "comment"
+            ]
+        },
+        "User": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "MongoDB ObjectId of the user"
+                },
+                "username": {
+                    "type": "string",
+                    "example": "johndoe"
+                }
+            },
+            "required": [
+                "id",
+                "username"
+            ]
+        },
+        "Error": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string",
+                    "example": "Error message"
+                }
+            },
+            "required": [
+                "error"
+            ]
         }
     }
 }
